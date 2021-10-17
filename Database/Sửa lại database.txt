@@ -1,0 +1,61 @@
+Create table admins(
+	id int primary key auto_increment
+	name varchar(40) not null,
+	email varchar(255) UNIQUE not null,
+	pass varchar(32) not null
+)
+
+Create table customers(
+	id int primary key auto_increment,
+	name varchar(40) not null,
+	address varchar(200) not null,
+	phone_no varchar(20) unique not null,
+	email varcahr(255) unique not null,
+	password varchar(32) not null
+)
+
+Create table types(
+	id int primary key auto_increment,
+	name varchar(40) not null
+	
+)
+
+Create table brands(
+	id int primary key auto_increment,
+	name varchar(50) not null,
+	location varchar(200)
+)
+
+Create table products(
+	id int primary key auto_increment,
+	name varchar(50) not null,
+	price float not null,
+	description texr not null,
+	status tinyint(1) not null
+	id_type int not null,
+	id_brand int not null,
+	constraint foreign key(id_type) references types(id)
+	constraint foreign key(id_brand) references brands(id)
+)
+
+Create table invoice(
+	id int primary key auto_increment,
+    	create_at timestamp not null,
+	tolal_amounts float not null,
+	receiver varchar(40) not null,
+	address varchar(200) not null,
+	phone varchar(20) not null,
+	status tinyint(1) not null,
+	id_admin int,
+	id_customer int not null,
+    	constraint foreign key(id_admin) references admins(id)
+	constraint foreign key(id_customer) references customers(id)
+)
+
+Create table invoice_details(
+id_invoice int not null,
+id_product int not null,
+primary key(id_invoice, id_product),
+constraint foreign key(id_invoice) references invoices(id),
+constraint foreign key(id_product) references products(id)
+) 
